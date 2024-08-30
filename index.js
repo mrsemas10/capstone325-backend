@@ -1,16 +1,14 @@
-import express from 'express'
-import dotenv from 'dotenv'
-import cors from 'cors'
-import connectDB from './connectDB/connectDB'
+const express = require("express");
+require("dotenv").config();
+const cors = require("cors");
 
-
+// ROUTERS
 const authRouter = require("./routers/auth.routers");
 const favoriteRouter = require("./routers/favorite.router");
-
+// CONNECT TO DATABASE
+const connectDB = require("./connectDB/connectDB");
 
 const app = express();
-const PORT = process.env.PORT || 5000;
-
 app.use(cors());
 app.use(express.json());
 
@@ -21,7 +19,16 @@ app.get("/", (req, res) => {
 app.use("/auth", authRouter);
 app.use("/favorite", favoriteRouter);
 
+const port = 5000 || process.env.PORT;
 
-app.listen(PORT, () => {
-  console.log(`Server is listening on port: ${PORT}`);
-})
+const start = async () => {
+  try {
+    await connectDB(process.env.MONGO_URI);
+    app.listen(port, () =>
+      console.log(`Server is listening on port ${port}...`)
+    );
+  } catch (error) {
+    console.log(error);
+  }
+};
+start();
