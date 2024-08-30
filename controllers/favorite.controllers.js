@@ -1,4 +1,4 @@
-import Favorite from '../models/favorite.model';
+const Favorite = require("../models/favorite.model");
 
 const addFavorite = async (req, res) => {
   try {
@@ -9,7 +9,7 @@ const addFavorite = async (req, res) => {
     if (find) {
       return res
         .status(409)
-        .json({ message: "Location already exists in favorite" });
+        .json({ message: "Location already exits in favorite" });
     }
     const favorite = await Favorite.create({
       ...req.body,
@@ -30,13 +30,16 @@ const getAllFavorites = async (req, res) => {
 };
 
 const deleteFavorite = async (req, res) => {
-  const { id } = req.params;
+  const { id, userEmail } = req.params;
   try {
-    await Favorite.findByIdAndDelete(id);
+    await Favorite.findOneAndDelete({ _id: id, user: userEmail });
     res.status(200).json({ message: "Location removed successfully" });
   } catch (error) {
     res.status(500).json({ message: "Error deleting favorite" });
   }
 };
-
-module.exports = {addFavorite, getAllFavorites, deleteFavorite};
+module.exports = {
+  addFavorite,
+  getAllFavorites,
+  deleteFavorite,
+};

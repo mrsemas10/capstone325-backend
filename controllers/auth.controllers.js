@@ -1,4 +1,4 @@
-import User from "../models/user.model"
+const User = require("../models/user.model");
 
 const createUser = async (req, res) => {
   try {
@@ -15,7 +15,7 @@ const login = async (req, res) => {
   const { email, password } = req.body;
   try {
     if (!email || !password)
-      throw new Error("Please provide email and password");
+      throw new Error("Please provide username or email and password");
     const user = await User.findOne({ email });
 
     if (!user) {
@@ -32,4 +32,7 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = {createUser, login};
+module.exports = {
+  createUser,
+  login,
+};
