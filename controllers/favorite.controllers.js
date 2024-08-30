@@ -9,7 +9,7 @@ const addFavorite = async (req, res) => {
     if (find) {
       return res
         .status(409)
-        .json({ message: "Location already exits in favorite" });
+        .json({ message: "Location already exists in favorites" });
     }
     const favorite = await Favorite.create({
       ...req.body,
