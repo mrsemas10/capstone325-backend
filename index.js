@@ -1,10 +1,14 @@
 const express = require("express");
-require("dotenv").config();
 const cors = require("cors");
+const port = 5000 || process.env.PORT;
+// const port = process.env.backendURL || `postgresql://postgres:tFhBddAYYSwuPgCltIlAiywZscGvKwgD@meticulous-empathy.railway.internal:5432/railway`
+
+require("dotenv").config();
 
 // ROUTERS
 const authRouter = require("./routers/auth.routers");
 const favoriteRouter = require("./routers/favorite.router");
+
 // CONNECT TO DATABASE
 const connectDB = require("./connectDB/connectDB");
 
@@ -19,7 +23,7 @@ app.get("/", (req, res) => {
 app.use("/auth", authRouter);
 app.use("/favorite", favoriteRouter);
 
-const port = 5000 || process.env.PORT;
+
 
 const start = async () => {
   try {
