@@ -3,8 +3,8 @@ const Favorite = require("../models/favorite.model");
 const addFavorite = async (req, res) => {
   try {
     const find = await Favorite.findOne({
-      location: { $regex: new RegExp(req.body.location, "i") },
-      user: { $regex: new RegExp(req.body.user, "i") },
+      location: { $regex: new RegExp(req.body.location, "i") }, //used for validing user input
+      user: { $regex: new RegExp(req.body.user, "i") }, //used for validing user input
     });
     if (find) {
       return res
